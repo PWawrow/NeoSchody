@@ -1,23 +1,60 @@
-#include <ModbusRtu.h>
+
+#define ARDBUFFER 16
+#include <stdarg.h>
+#include <Arduino.h>
+
 #include <SoftwareSerial.h>
+#include <ModbusRtu.h>
+#include <stdio.h>
 
-const byte rxPin = 10;
-const byte txPin = 11;
+int i = 0;
+uint16_t dataChunk[6] =   {1, 50, 50, 50, 255, 0};//Dane Z Modbusa
+SoftwareSerial mySerial(11, 12); // RX, TX
 
-uint16_t data[5]={0,0,0,0,0};
-
-
-Modbus slave(15,0,0);
-SoftwareSerial serial2 (rxPin, txPin);
+Modbus slave(15,0,0); //ID:15
 
 void setup() {
-  slave.begin(115200, SERIAL_8N1);
-  serial2.begin(115200);
-
+  mySerial.begin(115200);
+  slave.begin(57600, SERIAL_8N1); //DataB:8 Parity:None StopB:1
+  pinMode(8, OUTPUT);
 }
 
 void loop() {
-  slave.poll(data, 5);
-  serial2.println(data[0]+','+data[1]+','+data[2]+','+data[3]+','+data[4]);
-
+  //slave.poll( dataChunk, 6 ); 
+  
+  
+  
+    mySerial.print(dataChunk[0]);
+    mySerial.print('-');
+    mySerial.print(dataChunk[1]);
+    mySerial.print('-');
+    mySerial.print(dataChunk[2]);
+    mySerial.print('-');
+    mySerial.print(dataChunk[3]);
+    mySerial.print('-');
+    mySerial.print(dataChunk[4]);
+    mySerial.print('-');
+    mySerial.print(dataChunk[5]);
+    mySerial.println();
+  
+  
+  
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
