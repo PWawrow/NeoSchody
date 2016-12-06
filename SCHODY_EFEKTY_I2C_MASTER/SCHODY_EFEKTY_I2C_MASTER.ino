@@ -9,6 +9,7 @@
 int buff[6];
 
 #define NUM_LEDS 30
+
 CRGB leds[NUM_LEDS];
 #define PIN 11
 
@@ -17,8 +18,9 @@ void FadeInOut(byte red, byte green, byte blue);
 void Knight(byte red, byte green, byte blue, int EyeSize, int SpeedDelay, int ReturnDelay);
 void rainbowCycle(int SpeedDelay);
 void onoffon(byte red, byte green, byte blue, int SpeedDelay);
-void puls();
+void puls(byte r, byte g, byte b);
 void nightMode();
+
 
 void setup()
 {
@@ -44,7 +46,7 @@ void loop()
       Strobe(buff[1], buff[2], buff[3], 10, 50, 1000);
       break;
     case 3:
-      Knight(buff[1], buff[2], buff[3], 3, 25, 65);
+      Knight(buff[1], buff[2], buff[3], 3, 30, 80);
       break;
     case 4:
       rainbowCycle(20);
@@ -53,11 +55,16 @@ void loop()
       onoffon(buff[1], buff[2], buff[3], 70);
       break;
     case 6:
-      puls();
+      puls(buff[1], buff[2], buff[3]);
       break;
     case 7:
       nightMode();
       break;
+    case 8:
+      setAll(buff[1], buff[2], buff[3]);
+      break;
+    
+      
       
       
   }
@@ -194,24 +201,21 @@ void onoffon(byte red, byte green, byte blue, int SpeedDelay) {
     }
   }
 }
-void puls(){
-  for (int i = 0; i < NUM_LEDS; i++ ) {
-    setPixel(i, 25, 25, 25);
-  };
-  for (int i=0; i<NUM_LEDS; i++){
-    setPixel(i,255,255,255);
-    setPixel(i-1,255,255,255);
-    setPixel(i+1,255,255,255);
-    setPixel(i-2,150,150,150);
-    setPixel(i+2,150,150,150);
-    setPixel(i-3,100,100,100);
-    setPixel(i+3,100,100,100);
-    setPixel(i+4,75,75,75);
-    setPixel(i-4,75,75,75);
+void puls(byte r, byte g, byte b){
+
+for (int i = 0; i < NUM_LEDS; i++ ) {
+    setAll(15,15,15);    
+    setPixel(i,25,25,25);
+    setPixel(i+1,30,30,30);
+    setPixel(i+2,35,35,35);
+    setPixel(i+3,35,35,35);
+    setPixel(i+4,35,35,35);
+    setPixel(i+5,30,30,30);
+    setPixel(i+6,25,25,25);
+    showStrip();
+    delay(15);
   }
-  
-  showStrip();
-  delay(10);
+  delay(1000);
 }
 void nightMode(){
   if(leds[15].r != 0 && leds[15].g != 0 && leds[15].b != 0)setAll(0,0,0);
@@ -221,6 +225,4 @@ void nightMode(){
   setPixel(NUM_LEDS-3,100,100,100);
   showStrip();
 }
-
-
 
