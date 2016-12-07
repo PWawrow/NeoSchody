@@ -163,11 +163,11 @@ void KnightBCK(byte red, byte green, byte blue, int EyeSize, int SpeedDelay, int
 
   for(int i = 0; i < NUM_LEDS-EyeSize-2; i++) {
     setAll(red/15,green/15,blue/15);
-    setPixel(i, red/10, green/10, blue/10);
+    setPixel(i, red/9, green/9, blue/9);
     for(int j = 1; j <= EyeSize; j++) {
-      setPixel(i+j, red/10, green/10, blue/10); 
+      setPixel(i+j, red/9, green/9, blue/9); 
     }
-    setPixel(i+EyeSize+1, red/10, green/10, blue/10);
+    setPixel(i+EyeSize+1,red/9, green/9, blue/9);
     showStrip();
     delay(SpeedDelay);
   }
@@ -176,11 +176,11 @@ void KnightBCK(byte red, byte green, byte blue, int EyeSize, int SpeedDelay, int
   
   for(int i = NUM_LEDS-EyeSize-2; i > 0; i--) {
     setAll(red/15,green/15,blue/15);
-    setPixel(i, red/10, green/10, blue/10);
+    setPixel(i, red/9, green/9, blue/9);
     for(int j = 1; j <= EyeSize; j++) {
-      setPixel(i+j, red/10, green/10, blue/10); 
+      setPixel(i+j, red/9, green/9, blue/9); 
     }
-    setPixel(i+EyeSize+1, red/10, green/10, blue/10);
+    setPixel(i+EyeSize+1, red/9, green/9, blue/9);
     showStrip();
     delay(SpeedDelay);
   }
