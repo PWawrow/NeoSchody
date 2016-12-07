@@ -18,8 +18,10 @@ void FadeInOut(byte red, byte green, byte blue);
 void Knight(byte red, byte green, byte blue, int EyeSize, int SpeedDelay, int ReturnDelay);
 void rainbowCycle(int SpeedDelay);
 void onoffon(byte red, byte green, byte blue, int SpeedDelay);
-void puls(byte r, byte g, byte b);
+void puls();
 void nightMode();
+void colorWipe(byte red, byte green, byte blue, int del);
+void KnightBCK(byte red, byte green, byte blue, int EyeSize, int SpeedDelay, int ReturnDelay);
 
 
 void setup()
@@ -48,6 +50,7 @@ void loop()
     case 3:
       Knight(buff[1], buff[2], buff[3], 3, 30, 80);
       break;
+    
     case 4:
       rainbowCycle(20);
       break;
@@ -55,13 +58,19 @@ void loop()
       onoffon(buff[1], buff[2], buff[3], 70);
       break;
     case 6:
-      puls(buff[1], buff[2], buff[3]);
+      puls();
       break;
     case 7:
       nightMode();
       break;
     case 8:
       setAll(buff[1], buff[2], buff[3]);
+      break;
+    case 9:
+      colorWipe(buff[1], buff[2], buff[3], 25);
+      break;
+    case 10:
+      KnightBCK(buff[1], buff[2], buff[3], 3, 30, 80);
       break;
     
       
@@ -150,6 +159,34 @@ void Knight(byte red, byte green, byte blue, int EyeSize, int SpeedDelay, int Re
   
   delay(ReturnDelay);
 }
+void KnightBCK(byte red, byte green, byte blue, int EyeSize, int SpeedDelay, int ReturnDelay){
+
+  for(int i = 0; i < NUM_LEDS-EyeSize-2; i++) {
+    setAll(red/15,green/15,blue/15);
+    setPixel(i, red/10, green/10, blue/10);
+    for(int j = 1; j <= EyeSize; j++) {
+      setPixel(i+j, red/10, green/10, blue/10); 
+    }
+    setPixel(i+EyeSize+1, red/10, green/10, blue/10);
+    showStrip();
+    delay(SpeedDelay);
+  }
+
+  delay(ReturnDelay);
+  
+  for(int i = NUM_LEDS-EyeSize-2; i > 0; i--) {
+    setAll(red/15,green/15,blue/15);
+    setPixel(i, red/10, green/10, blue/10);
+    for(int j = 1; j <= EyeSize; j++) {
+      setPixel(i+j, red/10, green/10, blue/10); 
+    }
+    setPixel(i+EyeSize+1, red/10, green/10, blue/10);
+    showStrip();
+    delay(SpeedDelay);
+  }
+  
+  delay(ReturnDelay);
+}
 void rainbowCycle(int SpeedDelay) {
   byte *c;
   uint16_t i, j;
@@ -201,7 +238,7 @@ void onoffon(byte red, byte green, byte blue, int SpeedDelay) {
     }
   }
 }
-void puls(byte r, byte g, byte b){
+void puls(){
 
 for (int i = 0; i < NUM_LEDS; i++ ) {
     setAll(15,15,15);    
@@ -224,5 +261,15 @@ void nightMode(){
   setPixel(NUM_LEDS,100,100,100);
   setPixel(NUM_LEDS-3,100,100,100);
   showStrip();
+}
+void colorWipe(byte red, byte green, byte blue, int del) {
+  for(uint16_t i=0; i<NUM_LEDS; i++) {
+      setAll(red/15,green/15,blue/15);
+      setPixel(i, red/5, green/5, blue/5);
+      setPixel(i+1,red/4,green/4,blue/4);
+      setPixel(i+2, red/5, green/5, blue/5);
+      showStrip();
+      delay(del);
+  }
 }
 
